@@ -15,9 +15,9 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
-  font-family: 'Courier New', monospace;
-  font-size: 20px;   /* lebih besar */
-  font-weight: 600;  /* lebih tebal */
+  Arial, Helvetica, sans-serif;
+  font-size: 22px;   /* lebih besar */
+  font-weight: 650;  /* lebih tebal */
   color: #000;
 }
 
@@ -41,7 +41,7 @@ html, body {
 }
 
 .small { font-size: 20opx; font-weight: 400;}
-.total { font-size: 22px; font-weight: 500; }
+.total { font-size: 23px; font-weight: 500; }
 
 @media print {
   html, body {
@@ -132,33 +132,44 @@ function rupiah(n){
 }
 
 function initPrint(){
+
   const data = JSON.parse(localStorage.getItem("dataNotaHP"));
-  if(!data) return;
 
-  // isi semua data di sini
+  if(!data){
+    alert("Data tidak ditemukan!");
+    return;
+  }
 
+  document.getElementById("pNota").innerText = data.nota;
+  document.getElementById("pTanggal").innerText = data.tanggal;
+  document.getElementById("pNama").innerText = data.nama;
+  document.getElementById("pHP").innerText = data.hp;
+
+  document.getElementById("pDetail").innerText =
+  data.merk + " " + data.tipe + " - " +
+  data.storage + " / " + data.warna;
+
+  document.getElementById("pImei1").innerText = data.imei1;
+  document.getElementById("pImei2").innerText = data.imei2;
+
+  document.getElementById("pHarga").innerText = rupiah(data.harga);
+  document.getElementById("pDiskon").innerText = "- " + rupiah(data.diskon);
+  document.getElementById("pSisa").innerText = data.sisa;
+  document.getElementById("pGaransi").innerText = data.garansi;
+
+  // tunggu DOM benar-benar selesai render
   setTimeout(() => {
     window.print();
   }, 300);
 }
-function initPrint(){
-  const data = JSON.parse(localStorage.getItem("dataNotaHP"));
-  if(!data) return;
 
-  // isi semua data di sini
-
-  setTimeout(() => {
-    window.print();
-  }, 300);
-}
-
-
-window.print();
+window.onload = initPrint;
 
 </script>
 
 </body>
 </html>
+
 
 
 

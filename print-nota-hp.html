@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Print Nota HP</title>
+
+<style>
+@page { size: 80mm auto; margin: 5mm; }
+body { font-family: Arial; font-size: 12px; }
+.nota { width: 80mm; }
+.center { text-align: center; }
+.bold { font-weight: bold; }
+.line { border-top:1px dashed #000; margin:6px 0; }
+.row { display:flex; justify-content:space-between; }
+.small { font-size:11px; }
+.total { font-size:14px; font-weight:bold; }
+</style>
+</head>
+
+<body>
+
+<div class="nota">
+
+<div class="center bold">Sandy Cell</div>
+<div class="center small">
+Penjualan HP<br>
+Maksroman - Anggana<br>
+Telp: 081349798909
+</div>
+
+<div class="line"></div>
+
+<div class="row small">
+<span>No Nota</span>
+<span id="pNota"></span>
+</div>
+
+<div class="row small">
+<span>Tanggal</span>
+<span id="pTanggal"></span>
+</div>
+
+<div class="line"></div>
+
+<div class="small">
+<b>Pembeli:</b><br>
+<span id="pNama"></span><br>
+<span id="pHP"></span>
+</div>
+
+<div class="line"></div>
+
+<div class="small">
+<b>Detail HP</b><br>
+<span id="pDetail"></span><br>
+IMEI 1: <span id="pImei1"></span><br>
+IMEI 2: <span id="pImei2"></span>
+</div>
+
+<div class="line"></div>
+
+<div class="row small">
+<span>Harga</span>
+<span id="pHarga"></span>
+</div>
+
+<div class="row small">
+<span>Diskon</span>
+<span id="pDiskon"></span>
+</div>
+
+<div class="row small">
+<span>DP</span>
+<span id="pDP"></span>
+</div>
+
+<div class="line"></div>
+
+<div class="row total">
+<span>Sisa Bayar</span>
+<span id="pSisa"></span>
+</div>
+
+<div class="line"></div>
+
+<div class="small" id="pGaransi"></div>
+
+<div class="line"></div>
+
+<div class="center small">
+Terima kasih 🙏<br>
+Simpan nota sebagai bukti pembelian
+</div>
+
+</div>
+
+<script>
+
+function rupiah(n){
+  return "Rp " + Number(n).toLocaleString("id-ID");
+}
+
+const data = JSON.parse(localStorage.getItem("dataNotaHP"));
+
+if(data){
+
+document.getElementById("pNota").innerText = data.nota;
+document.getElementById("pTanggal").innerText = data.tanggal;
+document.getElementById("pNama").innerText = data.nama;
+document.getElementById("pHP").innerText = data.hp;
+
+document.getElementById("pDetail").innerText =
+data.merk + " " + data.tipe + " - " +
+data.storage + " / " + data.warna;
+
+document.getElementById("pImei1").innerText = data.imei1;
+document.getElementById("pImei2").innerText = data.imei2;
+
+document.getElementById("pHarga").innerText = rupiah(data.harga);
+document.getElementById("pDiskon").innerText = "- " + rupiah(data.diskon);
+document.getElementById("pDP").innerText = rupiah(data.dp);
+document.getElementById("pSisa").innerText = data.sisa;
+
+document.getElementById("pGaransi").innerText = data.garansi;
+
+}
+
+window.print();
+
+</script>
+
+</body>
+</html>

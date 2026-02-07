@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nota HP Baru | Sandy Cell</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+@media print {
+
+  body * {
+    visibility: hidden;
+  }
+
+  #areaPrint, #areaPrint * {
+    visibility: visible;
+  }
+
+  #areaPrint {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80mm;
+  }
+
+}
+
+.nota {
+  width: 80mm;
+  font-family: Arial;
+  font-size: 12px;
+}
+
+.line {
+  border-top:1px dashed #000;
+  margin:6px 0;
+}
+
+.row {
+  display:flex;
+  justify-content:space-between;
+}
+
+.total {
+  font-weight:bold;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body class="bg-gray-100">
+
+<div class="max-w-3xl mx-auto py-8 px-4">
+
+<!-- ================= FORM ================= -->
+
+<div id="formArea">
+
+<div class="bg-white rounded-2xl shadow p-6 mb-6">
+<h1 class="text-2xl font-bold mb-4 flex gap-2">
+<i data-lucide="smartphone"></i> Nota HP Baru
+</h1>
+
+<div class="grid sm:grid-cols-2 gap-4">
+<input id="nama" placeholder="Nama Pembeli" class="border p-2 rounded">
+<input id="hp" placeholder="No HP Pembeli" class="border p-2 rounded">
+
+<input id="merk" placeholder="Merk" class="border p-2 rounded">
+<input id="tipe" placeholder="Tipe" class="border p-2 rounded">
+
+<input id="warna" placeholder="Warna" class="border p-2 rounded">
+<input id="storage" placeholder="Storage" class="border p-2 rounded">
+
+<input id="imei1" placeholder="IMEI 1" class="border p-2 rounded">
+<input id="imei2" placeholder="IMEI 2" class="border p-2 rounded">
+
+<input id="harga" type="number" placeholder="Harga" class="border p-2 rounded">
+<input id="diskon" type="number" placeholder="Diskon" class="border p-2 rounded">
+<input id="dp" type="number" placeholder="DP" class="border p-2 rounded">
+
+<select id="garansi" class="border p-2 rounded">
+<option>Garansi Resmi 1 Tahun</option>
+<option>Garansi Toko 1 Bulan</option>
+<option>Tidak Ada Garansi</option>
+</select>
+
+</div>
+
+<button onclick="printNota()" 
+class="mt-6 w-full bg-black text-white py-3 rounded-lg">
+Print Nota
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ================= AREA PRINT ================= -->
+
+<div id="areaPrint" style="display:none">
+
+<div class="nota">
+
+<div style="text-align:center;font-weight:bold">
+Sandy Cell
+</div>
+
+<div style="text-align:center;font-size:11px">
+Penjualan HP<br>
+Anggana<br>
+Telp: 081349798909
+</div>
+
+<div class="line"></div>
+
+<div class="row">
+<span>No Nota</span>
+<span id="pNota"></span>
+</div>
+
+<div class="row">
+<span>Tanggal</span>
+<span id="pTanggal"></span>
+</div>
+
+<div class="line"></div>
+
+<div>
+<b>Pembeli:</b><br>
+<span id="pNama"></span><br>
+<span id="pHP"></span>
+</div>
+
+<div class="line"></div>
+
+<div>
+<b>Detail HP</b><br>
+<span id="pDetail"></span><br>
+IMEI1: <span id="pImei1"></span><br>
+IMEI2: <span id="pImei2"></span>
+</div>
+
+<div class="line"></div>
+
+<div class="row">
+<span>Harga</span>
+<span id="pHarga"></span>
+</div>
+
+<div class="row">
+<span>Diskon</span>
+<span id="pDiskon"></span>
+</div>
+
+<div class="row">
+<span>DP</span>
+<span id="pDP"></span>
+</div>
+
+<div class="line"></div>
+
+<div class="row total">
+<span>Sisa Bayar</span>
+<span id="pSisa"></span>
+</div>
+
+<div class="line"></div>
+
+<div id="pGaransi"></div>
+
+<div class="line"></div>
+
+<div style="text-align:center;font-size:11px">
+Terima kasih 🙏
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+lucide.createIcons();
+
+function rupiah(n){
+return "Rp " + Number(n).toLocaleString("id-ID");
+}
+
+function printNota(){
+
+const today = new Date();
+const nota = "HP-" + today.toISOString().slice(0,10).replace(/-/g,"") + "-" + Math.floor(Math.random()*900+100);
+
+const harga = parseInt(document.getElementById("harga").value) || 0;
+const diskon = parseInt(document.getElementById("diskon").value) || 0;
+const dp = parseInt(document.getElementById("dp").value) || 0;
+
+const total = harga - diskon;
+const sisa = total - dp;
+
+document.getElementById("pNota").innerText = nota;
+document.getElementById("pTanggal").innerText = today.toLocaleDateString("id-ID");
+
+document.getElementById("pNama").innerText = nama.value;
+document.getElementById("pHP").innerText = hp.value;
+
+document.getElementById("pDetail").innerText =
+merk.value + " " + tipe.value + " - " +
+storage.value + " / " + warna.value;
+
+document.getElementById("pImei1").innerText = imei1.value;
+document.getElementById("pImei2").innerText = imei2.value;
+
+document.getElementById("pHarga").innerText = rupiah(harga);
+document.getElementById("pDiskon").innerText = "- " + rupiah(diskon);
+document.getElementById("pDP").innerText = rupiah(dp);
+document.getElementById("pSisa").innerText = rupiah(sisa > 0 ? sisa : 0);
+
+document.getElementById("pGaransi").innerText = garansi.value;
+
+document.getElementById("areaPrint").style.display = "block";
+
+window.print();
+
+document.getElementById("areaPrint").style.display = "none";
+
+}
+</script>
+
+</body>
+</html>

@@ -161,8 +161,14 @@ function kirimData(){
     garansi: garansi.value
   };
 
+  localStorage.removeItem("dataNotaHP"); // bersihkan dulu
   localStorage.setItem("dataNotaHP", JSON.stringify(data));
-  window.open("print-nota-hp.html", "_blank");
+
+  // kasih sedikit delay supaya benar-benar tersimpan
+  setTimeout(() => {
+    window.open("print-nota-hp.html", "_blank");
+  }, 100);
+
 }
 </script>
 

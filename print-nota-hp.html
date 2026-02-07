@@ -53,7 +53,7 @@ html, body {
 
 </head>
 
-<body>
+<body onload="initPrint()">
 
 <div class="nota">
 
@@ -131,29 +131,27 @@ function rupiah(n){
   return "Rp " + Number(n).toLocaleString("id-ID");
 }
 
-const data = JSON.parse(localStorage.getItem("dataNotaHP"));
+function initPrint(){
+  const data = JSON.parse(localStorage.getItem("dataNotaHP"));
+  if(!data) return;
 
-if(data){
+  // isi semua data di sini
 
-document.getElementById("pNota").innerText = data.nota;
-document.getElementById("pTanggal").innerText = data.tanggal;
-document.getElementById("pNama").innerText = data.nama;
-document.getElementById("pHP").innerText = data.hp;
-
-document.getElementById("pDetail").innerText =
-data.merk + " " + data.tipe + " - " +
-data.storage + " / " + data.warna;
-
-document.getElementById("pImei1").innerText = data.imei1;
-document.getElementById("pImei2").innerText = data.imei2;
-
-document.getElementById("pHarga").innerText = rupiah(data.harga);
-document.getElementById("pDiskon").innerText = "- " + rupiah(data.diskon);
-document.getElementById("pSisa").innerText = data.sisa;
-
-document.getElementById("pGaransi").innerText = data.garansi;
-
+  setTimeout(() => {
+    window.print();
+  }, 300);
 }
+function initPrint(){
+  const data = JSON.parse(localStorage.getItem("dataNotaHP"));
+  if(!data) return;
+
+  // isi semua data di sini
+
+  setTimeout(() => {
+    window.print();
+  }, 300);
+}
+
 
 window.print();
 
@@ -161,6 +159,7 @@ window.print();
 
 </body>
 </html>
+
 
 
 

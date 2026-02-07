@@ -24,7 +24,7 @@ body { font-family: Arial; font-size: 12px; }
 <div class="center bold">Sandy Cell</div>
 <div class="center small">
 Penjualan HP<br>
-Maksroman - Anggana<br>
+Samarinda Jl. Poros Propinsi - Anggana, <br> Makroman<br>
 Telp: 081349798909
 </div>
 
@@ -67,11 +67,6 @@ IMEI 2: <span id="pImei2"></span>
 <div class="row small">
 <span>Diskon</span>
 <span id="pDiskon"></span>
-</div>
-
-<div class="row small">
-<span>DP</span>
-<span id="pDP"></span>
 </div>
 
 <div class="line"></div>
@@ -118,7 +113,6 @@ document.getElementById("pImei2").innerText = data.imei2;
 
 document.getElementById("pHarga").innerText = rupiah(data.harga);
 document.getElementById("pDiskon").innerText = "- " + rupiah(data.diskon);
-document.getElementById("pDP").innerText = rupiah(data.dp);
 document.getElementById("pSisa").innerText = data.sisa;
 
 document.getElementById("pGaransi").innerText = data.garansi;

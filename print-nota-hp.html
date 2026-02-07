@@ -7,32 +7,32 @@
 <style>
 
 @page {
-  size: 80mm auto;
+  size: auto;
   margin: 0;
 }
 
 html, body {
-  width: 80mm;
+  width: 100%;
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Courier New', monospace;
   font-size: 20px;   /* lebih besar */
-  font-weight: 500;  /* lebih tebal */
+  font-weight: 700;  /* lebih tebal */
   color: #000;
 }
 
 .nota {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
 .center { text-align: center; }
-.bold { font-weight: bold; }
+.bold { font-weight: 900; }
 
 .line {
-  border-top: 1px dashed #000;
-  margin: 8px 0;
+  border-top: 2px dashed #000;
+  margin: 10px 0;
 }
 
 .row {
@@ -40,12 +40,12 @@ html, body {
   justify-content: space-between;
 }
 
-.small { font-size: 13px; }
+.small { font-size: 18px; }
 .total { font-size: 22px; font-weight: bold; }
 
 @media print {
-  body {
-    -webkit-print-color-adjust: exact;
+  html, body {
+    width: 100%;
   }
 }
 
@@ -161,6 +161,7 @@ window.print();
 
 </body>
 </html>
+
 
 
 

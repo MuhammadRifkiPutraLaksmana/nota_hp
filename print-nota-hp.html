@@ -5,16 +5,52 @@
 <title>Print Nota HP</title>
 
 <style>
-@page { size: 80mm auto; margin: 5mm; }
-body { font-family: Arial; font-size: 12px; }
-.nota { width: 80mm; }
+
+@page {
+  size: 80mm auto;
+  margin: 0;
+}
+
+html, body {
+  width: 80mm;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;   /* lebih besar */
+  font-weight: 500;  /* lebih tebal */
+  color: #000;
+}
+
+.nota {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
 .center { text-align: center; }
 .bold { font-weight: bold; }
-.line { border-top:1px dashed #000; margin:6px 0; }
-.row { display:flex; justify-content:space-between; }
-.small { font-size:11px; }
-.total { font-size:14px; font-weight:bold; }
+
+.line {
+  border-top: 1px dashed #000;
+  margin: 8px 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.small { font-size: 13px; }
+.total { font-size: 16px; font-weight: bold; }
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+  }
+}
+
 </style>
+
 </head>
 
 <body>
@@ -125,3 +161,4 @@ window.print();
 
 </body>
 </html>
+

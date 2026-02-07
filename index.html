@@ -7,179 +7,87 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
-
-<style>
-@media print {
-
-  body * {
-    visibility: hidden;
-  }
-
-  #areaPrint, #areaPrint * {
-    visibility: visible;
-  }
-
-  #areaPrint {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 80mm;
-  }
-
-}
-
-.nota {
-  width: 80mm;
-  font-family: Arial;
-  font-size: 12px;
-}
-
-.line {
-  border-top:1px dashed #000;
-  margin:6px 0;
-}
-
-.row {
-  display:flex;
-  justify-content:space-between;
-}
-
-.total {
-  font-weight:bold;
-  font-size:14px;
-}
-</style>
 </head>
 
 <body class="bg-gray-100">
 
 <div class="max-w-3xl mx-auto py-8 px-4">
 
-<!-- ================= FORM ================= -->
-
-<div id="formArea">
-
+<!-- HEADER -->
 <div class="bg-white rounded-2xl shadow p-6 mb-6">
-<h1 class="text-2xl font-bold mb-4 flex gap-2">
-<i data-lucide="smartphone"></i> Nota HP Baru
-</h1>
+  <div class="flex justify-between items-center">
+    <div>
+      <h1 class="text-2xl font-bold flex items-center gap-2">
+        <i data-lucide="smartphone" class="w-6 h-6 text-teal-600"></i>
+        Nota Penjualan HP Baru
+      </h1>
+      <p class="text-sm text-gray-500">Transaksi Resmi Sandy Cell</p>
+    </div>
+    <div class="bg-teal-50 px-4 py-2 rounded-xl text-sm font-semibold text-teal-700">
+      <div id="notaNumber"></div>
+      <div id="notaDate" class="text-xs text-teal-600"></div>
+    </div>
+  </div>
+</div>
 
+<!-- DATA PEMBELI -->
+<div class="bg-white rounded-2xl shadow p-6 mb-6 space-y-4">
+<h2 class="font-semibold">Data Pembeli</h2>
 <div class="grid sm:grid-cols-2 gap-4">
-<input id="nama" placeholder="Nama Pembeli" class="border p-2 rounded">
-<input id="hp" placeholder="No HP Pembeli" class="border p-2 rounded">
+<input id="namaPembeli" type="text" placeholder="Nama Pembeli" class="border rounded-lg px-3 py-2 text-sm">
+<input id="hpPembeli" type="text" placeholder="Nomor HP Pembeli" class="border rounded-lg px-3 py-2 text-sm">
+</div>
+</div>
 
-<input id="merk" placeholder="Merk" class="border p-2 rounded">
-<input id="tipe" placeholder="Tipe" class="border p-2 rounded">
+<!-- DETAIL HP -->
+<div class="bg-white rounded-2xl shadow p-6 mb-6 space-y-4">
+<h2 class="font-semibold">Detail HP</h2>
+<div class="grid sm:grid-cols-2 gap-4">
+<input id="merk" type="text" placeholder="Merk" class="border rounded-lg px-3 py-2 text-sm">
+<input id="tipe" type="text" placeholder="Tipe" class="border rounded-lg px-3 py-2 text-sm">
+<input id="warna" type="text" placeholder="Warna" class="border rounded-lg px-3 py-2 text-sm">
+<input id="storage" type="text" placeholder="Storage" class="border rounded-lg px-3 py-2 text-sm">
+<input id="imei1" type="text" placeholder="IMEI 1" class="border rounded-lg px-3 py-2 text-sm">
+<input id="imei2" type="text" placeholder="IMEI 2" class="border rounded-lg px-3 py-2 text-sm">
+</div>
+</div>
 
-<input id="warna" placeholder="Warna" class="border p-2 rounded">
-<input id="storage" placeholder="Storage" class="border p-2 rounded">
-
-<input id="imei1" placeholder="IMEI 1" class="border p-2 rounded">
-<input id="imei2" placeholder="IMEI 2" class="border p-2 rounded">
-
-<input id="harga" type="number" placeholder="Harga" class="border p-2 rounded">
-<input id="diskon" type="number" placeholder="Diskon" class="border p-2 rounded">
-<input id="dp" type="number" placeholder="DP" class="border p-2 rounded">
-
-<select id="garansi" class="border p-2 rounded">
+<!-- PEMBAYARAN -->
+<div class="bg-white rounded-2xl shadow p-6 mb-6 space-y-4">
+<h2 class="font-semibold">Pembayaran</h2>
+<div class="grid sm:grid-cols-2 gap-4">
+<input id="harga" type="number" placeholder="Harga HP" class="border rounded-lg px-3 py-2 text-sm">
+<input id="diskon" type="number" placeholder="Diskon" class="border rounded-lg px-3 py-2 text-sm">
+<input id="dp" type="number" placeholder="DP" class="border rounded-lg px-3 py-2 text-sm">
+<select id="metode" class="border rounded-lg px-3 py-2 text-sm">
+<option>Cash</option>
+<option>Transfer</option>
+<option>QRIS</option>
+</select>
+<select id="garansi" class="border rounded-lg px-3 py-2 text-sm">
 <option>Garansi Resmi 1 Tahun</option>
 <option>Garansi Toko 1 Bulan</option>
 <option>Tidak Ada Garansi</option>
 </select>
-
 </div>
 
-<button onclick="printNota()" 
-class="mt-6 w-full bg-black text-white py-3 rounded-lg">
+<div class="bg-gray-50 rounded-lg p-4 text-sm space-y-2">
+<div class="flex justify-between">
+<span>Total Setelah Diskon</span>
+<span id="totalHarga">Rp 0</span>
+</div>
+<div class="flex justify-between">
+<span>Sisa Pembayaran</span>
+<span id="sisaBayar">Rp 0</span>
+</div>
+</div>
+</div>
+
+<!-- PRINT -->
+<div class="bg-white rounded-2xl shadow p-6">
+<button onclick="kirimData()" class="w-full py-3 bg-black text-white rounded-lg">
 Print Nota
 </button>
-
-</div>
-
-</div>
-
-
-<!-- ================= AREA PRINT ================= -->
-
-<div id="areaPrint" style="display:none">
-
-<div class="nota">
-
-<div style="text-align:center;font-weight:bold">
-Sandy Cell
-</div>
-
-<div style="text-align:center;font-size:11px">
-Penjualan HP<br>
-Anggana<br>
-Telp: 081349798909
-</div>
-
-<div class="line"></div>
-
-<div class="row">
-<span>No Nota</span>
-<span id="pNota"></span>
-</div>
-
-<div class="row">
-<span>Tanggal</span>
-<span id="pTanggal"></span>
-</div>
-
-<div class="line"></div>
-
-<div>
-<b>Pembeli:</b><br>
-<span id="pNama"></span><br>
-<span id="pHP"></span>
-</div>
-
-<div class="line"></div>
-
-<div>
-<b>Detail HP</b><br>
-<span id="pDetail"></span><br>
-IMEI1: <span id="pImei1"></span><br>
-IMEI2: <span id="pImei2"></span>
-</div>
-
-<div class="line"></div>
-
-<div class="row">
-<span>Harga</span>
-<span id="pHarga"></span>
-</div>
-
-<div class="row">
-<span>Diskon</span>
-<span id="pDiskon"></span>
-</div>
-
-<div class="row">
-<span>DP</span>
-<span id="pDP"></span>
-</div>
-
-<div class="line"></div>
-
-<div class="row total">
-<span>Sisa Bayar</span>
-<span id="pSisa"></span>
-</div>
-
-<div class="line"></div>
-
-<div id="pGaransi"></div>
-
-<div class="line"></div>
-
-<div style="text-align:center;font-size:11px">
-Terima kasih 🙏
-</div>
-
-</div>
-
 </div>
 
 </div>
@@ -187,47 +95,64 @@ Terima kasih 🙏
 <script>
 lucide.createIcons();
 
-function rupiah(n){
-return "Rp " + Number(n).toLocaleString("id-ID");
-}
-
-function printNota(){
+const notaNumber = document.getElementById("notaNumber");
+const notaDate = document.getElementById("notaDate");
 
 const today = new Date();
-const nota = "HP-" + today.toISOString().slice(0,10).replace(/-/g,"") + "-" + Math.floor(Math.random()*900+100);
+const dateStr = today.toISOString().slice(0,10).replace(/-/g,"");
+const random = Math.floor(Math.random() * 900 + 100);
 
-const harga = parseInt(document.getElementById("harga").value) || 0;
-const diskon = parseInt(document.getElementById("diskon").value) || 0;
-const dp = parseInt(document.getElementById("dp").value) || 0;
+notaNumber.innerText = "HP-" + dateStr + "-" + random;
+notaDate.innerText = today.toLocaleDateString("id-ID");
 
-const total = harga - diskon;
-const sisa = total - dp;
+function rupiah(n){
+  return "Rp " + Number(n).toLocaleString("id-ID");
+}
 
-document.getElementById("pNota").innerText = nota;
-document.getElementById("pTanggal").innerText = today.toLocaleDateString("id-ID");
+const hargaInput = document.getElementById("harga");
+const diskonInput = document.getElementById("diskon");
+const dpInput = document.getElementById("dp");
 
-document.getElementById("pNama").innerText = nama.value;
-document.getElementById("pHP").innerText = hp.value;
+hargaInput.oninput = calculate;
+diskonInput.oninput = calculate;
+dpInput.oninput = calculate;
 
-document.getElementById("pDetail").innerText =
-merk.value + " " + tipe.value + " - " +
-storage.value + " / " + warna.value;
+function calculate(){
+  const harga = parseInt(hargaInput.value) || 0;
+  const diskon = parseInt(diskonInput.value) || 0;
+  const dp = parseInt(dpInput.value) || 0;
 
-document.getElementById("pImei1").innerText = imei1.value;
-document.getElementById("pImei2").innerText = imei2.value;
+  const total = harga - diskon;
+  const sisa = total - dp;
 
-document.getElementById("pHarga").innerText = rupiah(harga);
-document.getElementById("pDiskon").innerText = "- " + rupiah(diskon);
-document.getElementById("pDP").innerText = rupiah(dp);
-document.getElementById("pSisa").innerText = rupiah(sisa > 0 ? sisa : 0);
+  document.getElementById("totalHarga").innerText = rupiah(total);
+  document.getElementById("sisaBayar").innerText = rupiah(sisa > 0 ? sisa : 0);
+}
 
-document.getElementById("pGaransi").innerText = garansi.value;
+function kirimData(){
 
-document.getElementById("areaPrint").style.display = "block";
+  const data = {
+    nota: notaNumber.innerText,
+    tanggal: notaDate.innerText,
+    nama: namaPembeli.value,
+    hp: hpPembeli.value,
+    merk: merk.value,
+    tipe: tipe.value,
+    warna: warna.value,
+    storage: storage.value,
+    imei1: imei1.value,
+    imei2: imei2.value,
+    harga: harga.value || 0,
+    diskon: diskon.value || 0,
+    dp: dp.value || 0,
+    total: totalHarga.innerText,
+    sisa: sisaBayar.innerText,
+    metode: metode.value,
+    garansi: garansi.value
+  };
 
-window.print();
-
-document.getElementById("areaPrint").style.display = "none";
+  localStorage.setItem("dataNotaHP", JSON.stringify(data));
+  window.open("print-nota-hp.html", "_blank");
 
 }
 </script>

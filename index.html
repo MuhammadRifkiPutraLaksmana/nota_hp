@@ -58,7 +58,6 @@
 <div class="grid sm:grid-cols-2 gap-4">
 <input id="harga" type="number" placeholder="Harga HP" class="border rounded-lg px-3 py-2 text-sm">
 <input id="diskon" type="number" placeholder="Diskon" class="border rounded-lg px-3 py-2 text-sm">
-<input id="dp" type="number" placeholder="DP" class="border rounded-lg px-3 py-2 text-sm">
 <select id="metode" class="border rounded-lg px-3 py-2 text-sm">
 <option>Cash</option>
 <option>Transfer</option>
@@ -111,19 +110,15 @@ function rupiah(n){
 
 const hargaInput = document.getElementById("harga");
 const diskonInput = document.getElementById("diskon");
-const dpInput = document.getElementById("dp");
 
 hargaInput.oninput = calculate;
 diskonInput.oninput = calculate;
-dpInput.oninput = calculate;
 
 function calculate(){
   const harga = parseInt(hargaInput.value) || 0;
   const diskon = parseInt(diskonInput.value) || 0;
-  const dp = parseInt(dpInput.value) || 0;
 
   const total = harga - diskon;
-  const sisa = total - dp;
 
   document.getElementById("totalHarga").innerText = rupiah(total);
   document.getElementById("sisaBayar").innerText = rupiah(sisa > 0 ? sisa : 0);
@@ -144,7 +139,6 @@ function kirimData(){
     imei2: imei2.value,
     harga: harga.value || 0,
     diskon: diskon.value || 0,
-    dp: dp.value || 0,
     total: totalHarga.innerText,
     sisa: sisaBayar.innerText,
     metode: metode.value,
